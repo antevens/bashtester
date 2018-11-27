@@ -15,7 +15,8 @@ services:
               read_only: true
         environment:
             - USER=${USER}
-              USERNAME=${USERNAME}
-              LS_COLORS=${LS_COLORS}
+            - USERNAME=${USERNAME}
+            - LS_COLORS=${LS_COLORS}
+            - verbosity=${verbosity}
         command:
             /usr/local/bin/bash -c 'bash --version'

@@ -34,16 +34,20 @@ if [ "${#}" -eq 0 ] || [ "${1}" == '--help' ] ; then
     exit 1
 fi
 
-bash_images=( '3.0.22' \
-              '3.1.23' \
-              '3.2.57' \
-              '4.0.44' \
-              '4.1.17' \
-              '4.2.53' \
-              '4.3.48' \
-              '4.4.23' \
-              '5.0-beta' )
+default_bash_images=( '3.0.22' \
+                      '3.1.23' \
+                      '3.2.57' \
+                      '4.0.44' \
+                      '4.1.17' \
+                      '4.2.53' \
+                      '4.3.48' \
+                      '4.4.23' \
+                      '5.0-beta' )
+
+bash_images=( ${bash_images:-"${default_bash_images[@]}"} )
 
 for version in "${bash_images[@]}" ; do
+    echo "########## ${version} ##########"
     target_bash_version=${version} docker-compose run bash-tester "${@}"
+    echo "############################"
 done
