@@ -1,0 +1,21 @@
+version: '3.6'
+
+x-logging:
+    &common-logging
+    driver: "json-file"
+
+services:
+    bash-tester:
+        image: bash:${target_bash_version}
+        logging: *common-logging
+        volumes:
+            - type: bind
+              source: ../
+              target: /code
+              read_only: true
+        environment:
+            - USER=${USER}
+              USERNAME=${USERNAME}
+              LS_COLORS=${LS_COLORS}
+        command:
+            /usr/local/bin/bash -c 'bash --version'
