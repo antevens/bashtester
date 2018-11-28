@@ -116,6 +116,6 @@ bash_images=( ${bash_images:-"${default_bash_images[@]}"} )
 
 for version in "${bash_images[@]}" ; do
     echo "########## ${version} ##########"
-    target_bash_version=${version} docker-compose run bash-tester /usr/local/bin/bash -c '"${@}"'
+    target_bash_version=${version} docker-compose run bash-tester /usr/local/bin/bash -c "${@}"
     echo "############################"
 done
