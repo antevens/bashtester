@@ -90,11 +90,9 @@ import_lib
 
 # Record originnal directory
 original_pwd="${PWD}"
-project_path="$(readlink -f "${BASH_SOURCE[0]}" 2> /dev/null || realpath "${BASH_SOURCE[0]}" 2> /dev/null || greadlink -f "${BASH_SOURCE[1]}" 2> /dev/null)"
+project_path="$(readlink -f "${BASH_SOURCE[0]}" 2> /dev/null || realpath "${BASH_SOURCE[0]}" 2> /dev/null || greadlink -f "${BASH_SOURCE[0]}" 2> /dev/null)"
 project_path="$(dirname ${full_path:-${0}})"
 cd "${project_path}" && add_on_exit "cd ${original_pwd}"
-
-dcc="docker-compose run bash-tester"
 
 if [ "${#}" -eq 0 ] || [ "${1}" == '--help' ] ; then
     color_echo cyan "Bash tester, tests a bash script/command on all currently supported bash versions"
@@ -118,6 +116,6 @@ bash_images=( ${bash_images:-"${default_bash_images[@]}"} )
 
 for version in "${bash_images[@]}" ; do
     echo "########## ${version} ##########"
-    target_bash_version=${version} docker-compose run bash-tester "${@}"
+    target_bash_version=${version} docker-compose run bash-tester /usr/local/bin/bash -c '"${@}"'
     echo "############################"
 done
