@@ -91,11 +91,11 @@ import_lib
 # Record originnal directory
 original_pwd="${PWD}"
 project_path="$(readlink -f "${BASH_SOURCE[0]}" 2> /dev/null || realpath "${BASH_SOURCE[0]}" 2> /dev/null || greadlink -f "${BASH_SOURCE[0]}" 2> /dev/null)"
-project_path="$(dirname ${full_path:-${0}})"
+project_path="$(dirname "${full_path:-${0}}")"
 cd "${project_path}" && add_on_exit "cd ${original_pwd}"
 
 if [ "${#}" -eq 0 ] || [ "${1}" == '--help' ] ; then
-    color_echo cyan "Bash tester, tests a bash script/command on all currently supported bash versions"
+    color_echo cyan 'Bash tester, tests a bash script/command on all currently supported bash versions'
     color_echo cyan "Typically this would be used as a git submodule and will map it's parent directory as /code"
     color_echo magenta "Usage: ${0} command_to_run"
     color_echo magenta  "Example: ${0} /code/run_app.sh --run_unit_tests"
@@ -116,6 +116,6 @@ bash_images=( ${bash_images:-"${default_bash_images[@]}"} )
 
 for version in "${bash_images[@]}" ; do
     echo "########## ${version} ##########"
-    target_bash_version=${version} docker-compose run bash-tester /usr/local/bin/bash -c "${@}"
+    target_bash_version="${version}" docker-compose run bash-tester /usr/local/bin/bash -c "${@}"
     echo "############################"
 done
