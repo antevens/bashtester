@@ -6,7 +6,12 @@ x-logging:
 
 services:
     bash-tester:
-        image: bash:${target_bash_version}
+        build:
+            context: .
+            dockerfile: Dockerfile-bash
+            args:
+                bash_version: ${target_bash_version}
+
         logging: *common-logging
         volumes:
             - type: bind
@@ -18,5 +23,6 @@ services:
             - USERNAME=${USERNAME}
             - LS_COLORS=${LS_COLORS}
             - verbosity=${verbosity}
+            - target_bash_version=${target_bash_version}
         command:
             /usr/local/bin/bash -c 'bash --version'

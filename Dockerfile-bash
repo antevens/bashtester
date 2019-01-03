@@ -1,0 +1,8 @@
+ARG bash_version
+FROM bash:${bash_version}
+
+# Disable frontend dialogs
+ENV DEBIAN_FRONTEND noninteractive
+
+# Make sure required binaries/packages are installed
+RUN apk add inotify-tools && rm -rf /var/cache/apk/*
